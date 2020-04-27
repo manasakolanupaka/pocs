@@ -1,17 +1,32 @@
 package com.example.demo.entities;
 
+import java.io.Serializable;
+import java.util.List;
+import java.util.Set;
+
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
+import javax.persistence.OneToMany;
+import javax.persistence.JoinColumn;
 import javax.persistence.Table;
 
 @Entity
 @Table(name = "TBL_EMPLOYEES")
-public class EmployeeEntity {
+public class EmployeeEntity implements Serializable {
+
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 
 	@Id
-	@GeneratedValue
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 
 	@Column(name = "first_name")
@@ -22,6 +37,34 @@ public class EmployeeEntity {
 
 	@Column(name = "email", nullable = false, length = 200)
 	private String email;
+
+	@ManyToMany
+	@JoinTable(name = "TBL_DEPT_EMPLOYEE", joinColumns = {
+			@JoinColumn(name = "employee_id", referencedColumnName = "id") }, inverseJoinColumns = {
+					@JoinColumn(name = "department_id", referencedColumnName = "id") })
+	private List<DepartmentEntity> dpts;
+	
+	@ManyToMany
+	@JoinTable(name = "TBL_ROLE_EMPLOYEE", joinColumns = {
+			@JoinColumn(name = "employee_id", referencedColumnName = "id") }, inverseJoinColumns = {
+					@JoinColumn(name = "role_id", referencedColumnName = "id") })
+	private List<RoleEntity> roles;
+
+	public List<RoleEntity> getRoles() {
+		return roles;
+	}
+
+	public void setRoles(List<RoleEntity> roles) {
+		this.roles = roles;
+	}
+
+	public List<DepartmentEntity> getDpts() {
+		return dpts;
+	}
+
+	public void setDpts(List<DepartmentEntity> dpts) {
+		this.dpts = dpts;
+	}
 
 	public Long getId() {
 		return id;
