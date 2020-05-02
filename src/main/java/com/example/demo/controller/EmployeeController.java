@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import com.example.demo.entities.EmployeeEntity;
 import com.example.demo.service.EmployeeService;
+import com.example.demo.service.MyBatisEmployeeService;
 
 @RestController
 @RequestMapping("/api/emp")
@@ -23,6 +24,8 @@ public class EmployeeController {
 
 	@Autowired
 	EmployeeService service;
+	@Autowired
+	MyBatisEmployeeService batisService;
 
 	@GetMapping("/employees")
 	public List<EmployeeEntity> getEmployeeDetails() {
@@ -51,6 +54,14 @@ public class EmployeeController {
 		logger.info(empRoledetails.toString());
 		return empRoledetails;
 	}
-
-	
+	@GetMapping("/employeesusingmybatis")
+	public List<EmployeeEntity> getAllEmployees() {
+		List<EmployeeEntity> allEmployees=batisService.getAllEmployees();
+		return allEmployees;
+	}
+	@PostMapping("/createEmployeeusingmybatis")
+	public void createEmployee(@RequestBody EmployeeEntity e) {
+		batisService.createEmployee(e);
+		
+	}
 }

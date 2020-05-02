@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper
+	namespace="com.example.demo.repositories.MyBatisEmployeeRepository">
+
+	<select id="findAllEmployees" resultType="EmployeeEntity"
+		parameterType="java.util.List">
+		select emp.id as id, first_name as firstName,last_name as lastName, email as email from TBL_EMPLOYEES emp,TBL_DEPARTMENT dpt,TBL_DEPT_EMPLOYEE
+		dp_e,TBL_ROLE role ,TBL_ROLE_EMPLOYEE r_e where
+		emp.id=dp_e.employee_id and emp.id=r_e.employee_id
+		and dpt.id=dp_e.department_id and
+		role.id= r_e.role_id
+	</select>
+
+</mapper>
