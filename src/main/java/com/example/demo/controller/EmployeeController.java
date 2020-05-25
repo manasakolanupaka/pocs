@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import com.example.demo.entities.EmployeeEntity;
+import com.example.demo.entities.EmployeePojo;
 import com.example.demo.service.EmployeeService;
 import com.example.demo.service.MyBatisEmployeeService;
 
@@ -55,8 +56,8 @@ public class EmployeeController {
 		return empRoledetails;
 	}
 	@GetMapping("/employeesusingmybatis")
-	public List<EmployeeEntity> getAllEmployees() {
-		List<EmployeeEntity> allEmployees=batisService.getAllEmployees();
+	public List<EmployeePojo> getAllEmployees() {
+		List<EmployeePojo> allEmployees=batisService.getAllEmployees();
 		return allEmployees;
 	}
 	@PostMapping("/createEmployeeusingmybatis")

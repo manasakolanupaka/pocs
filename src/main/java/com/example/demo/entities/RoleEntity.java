@@ -23,7 +23,7 @@ public class RoleEntity {
 	@Column(name = "role")
 	private String role;
 
-	@ManyToMany(mappedBy = "dpts")
+	@ManyToMany(mappedBy = "roles")
 	@JsonIgnore
 	private List<EmployeeEntity> employees;
 

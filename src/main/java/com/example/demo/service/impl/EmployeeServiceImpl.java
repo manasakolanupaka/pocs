@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.jms.core.JmsTemplate;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -22,6 +23,8 @@ public class EmployeeServiceImpl implements EmployeeService {
 	DepartmentRepository dRepo;
 	@Autowired
 	InsuranceRepository iRepo;
+	@Autowired
+	JmsTemplate jmsTemplate;
 
 	@Override
 	public List<EmployeeEntity> fetchEmployeeDetails() {
@@ -44,6 +47,7 @@ public class EmployeeServiceImpl implements EmployeeService {
 		insurance.setInsuranceAmount(200);
 		insurance.setInsurancePlan("STAR HEALTH");
 		iRepo.save(insurance);
+		jmsTemplate.convertAndSend("jms.message.testQueue", e);
 		return e;
 	}
 
